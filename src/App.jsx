@@ -25,7 +25,7 @@ const phoneHref = 'tel:+526671872721';
 const whatsappHref =
   'https://wa.me/526671872721?text=Hola%20Mr.%20Baleros%2C%20quiero%20cotizar%20una%20pieza%20para%20mi%20vehiculo.';
 const mapHref =
-  'https://www.google.com/maps/search/?api=1&query=Avenida%20Revoluci%C3%B3n%20%26%20Plan%20de%20Tuxtepec%2C%20Emiliano%20Zapata%2C%2080260%20Culiac%C3%A1n%20Rosales%2C%20Sin.';
+  'https://www.google.com/maps/search/?api=1&query=24.79013463953869,-107.36630349025589';
 
 const navItems = [
   { label: 'Servicios', href: '#servicios' },
@@ -264,6 +264,18 @@ function ThreePerritos() {
           />
         </motion.div>
       ))}
+    </div>
+  );
+}
+
+function PerritoDivider() {
+  return (
+    <div className="flex items-center justify-center gap-4 py-8 opacity-20" aria-hidden="true">
+      <div className="h-[1px] w-24 bg-gradient-to-r from-transparent to-orange-500" />
+      <span className="text-sm">🐾</span>
+      <img src="/images/logo-perrito.png" alt="perrito spacer" className="h-5 w-5 rounded-full object-cover" />
+      <span className="text-sm">🐾</span>
+      <div className="h-[1px] w-24 bg-gradient-to-l from-transparent to-orange-500" />
     </div>
   );
 }
@@ -519,6 +531,23 @@ function App() {
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-zinc-950 via-transparent to-transparent" />
                       
+                      {/* Floating decorative perritos in empty spaces */}
+                      <motion.div 
+                        className="absolute -top-6 -left-6 z-10 h-12 w-12 rounded-full border border-orange-500/30 bg-zinc-950/85 p-1 shadow-lg backdrop-blur-sm pointer-events-none"
+                        animate={{ y: [0, -10, 0], rotate: [0, 10, -10, 0] }}
+                        transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+                      >
+                        <img src="/images/logo-perrito.png" alt="decoración perrito" className="h-full w-full rounded-full object-cover" />
+                      </motion.div>
+
+                      <motion.div 
+                        className="absolute -bottom-6 -right-6 z-10 h-10 w-10 rounded-full border border-orange-500/20 bg-zinc-950/85 p-1 shadow-lg backdrop-blur-sm pointer-events-none"
+                        animate={{ y: [0, 8, 0], rotate: [0, -15, 15, 0] }}
+                        transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: 1 }}
+                      >
+                        <img src="/images/logo-perrito.png" alt="decoración perrito" className="h-full w-full rounded-full object-cover" />
+                      </motion.div>
+
                       {/* Floating Badges */}
                       <motion.div 
                         className="absolute top-4 left-4 rounded-xl bg-orange-600/90 border border-orange-400/20 px-3.5 py-1.5 text-xs font-black uppercase tracking-wider text-white backdrop-blur-md shadow-lg"
@@ -568,6 +597,8 @@ function App() {
               </div>
             </div>
           </section>
+
+          <PerritoDivider />
 
           {/* SERVICES SECTION */}
           <section id="servicios" className="relative bg-zinc-950 py-20 sm:py-28 border-t border-white/5">
@@ -666,6 +697,8 @@ function App() {
             </div>
           </section>
 
+          <PerritoDivider />
+
           {/* INTERACTIVE EXPRESS DIAGNOSTIC */}
           <section id="diagnostico" className="relative bg-zinc-900/40 py-20 sm:py-28 border-t border-white/5">
             <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
@@ -684,6 +717,11 @@ function App() {
                 viewport={{ once: true }}
                 transition={{ duration: 0.6 }}
               >
+                {/* Decorative bubble perrito popping out of empty space */}
+                <div className="absolute -top-3 -right-3 h-14 w-14 rounded-full border-2 border-orange-500 bg-zinc-950 p-0.5 shadow-xl rotate-12 z-20 pointer-events-none">
+                  <img src="/images/logo-perrito.png" alt="decoración perrito" className="h-full w-full rounded-full object-cover" />
+                </div>
+
                 {/* Decorative background logo */}
                 <div className="absolute right-4 bottom-4 opacity-5 pointer-events-none">
                   <img src="/images/logo-perrito.png" alt="watermark" className="h-64 w-64 rounded-full object-cover" />
@@ -801,14 +839,25 @@ function App() {
                   >
                     <img src={item.src} alt={`${item.title} en Mr. Baleros`} loading="lazy" />
                     <div className="gallery-caption">
-                      <h3>{item.title}</h3>
-                      <p>{item.caption}</p>
+                      <div className="flex items-center justify-between">
+                        <div>
+                          <h3>{item.title}</h3>
+                          <p>{item.caption}</p>
+                        </div>
+                        <img 
+                          src="/images/logo-perrito.png" 
+                          alt="Perrito Mascota" 
+                          className="h-8 w-8 rounded-full object-cover border border-orange-500/30 opacity-0 group-hover:opacity-100 transition-opacity duration-300 shadow-md shrink-0" 
+                        />
+                      </div>
                     </div>
                   </motion.article>
                 ))}
               </div>
             </div>
           </section>
+
+          <PerritoDivider />
 
           {/* PROCESS ROW */}
           <section className="bg-zinc-900/30 py-20 sm:py-28 border-t border-white/5">
@@ -861,8 +910,17 @@ function App() {
           </section>
 
           {/* LOCATION SECTION */}
-          <section id="ubicacion" className="bg-zinc-950 py-20 sm:py-28 border-t border-white/5">
-            <div className="mx-auto grid max-w-7xl gap-10 px-4 sm:px-6 lg:grid-cols-[0.82fr_1.18fr] lg:px-8">
+          <section id="ubicacion" className="relative bg-zinc-950 py-20 sm:py-28 border-t border-white/5 overflow-hidden">
+            {/* Huge background perrito mascot watermark behind this section */}
+            <div className="absolute -right-20 -bottom-20 opacity-5 pointer-events-none z-0">
+              <img 
+                src="/images/logo-perrito.png" 
+                alt="Mascota gigante de fondo" 
+                className="h-[420px] w-[420px] rounded-full object-cover" 
+              />
+            </div>
+
+            <div className="relative mx-auto grid max-w-7xl gap-10 px-4 sm:px-6 lg:grid-cols-[0.82fr_1.18fr] lg:px-8 z-10">
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
@@ -951,15 +1009,6 @@ function App() {
                 Especialistas en juntas homocinéticas, flechas, tripoides y cardán a la medida. 
                 Atendemos autos de nueva generación (<strong className="text-orange-400">MG</strong>, <strong className="text-orange-400">JAC</strong>) y marcas de alto desempeño con el mejor servicio de Culiacán.
               </p>
-              
-              {/* Seal Mascot display inside footer */}
-              <div className="mt-4 flex items-center gap-3.5 rounded-xl border border-white/5 bg-white/2 p-3.5 shadow-lg">
-                <img src="/images/logo-perrito.png" alt="Sello perrito" className="h-10 w-10 rounded-full border border-orange-500/25 object-cover" />
-                <div>
-                  <span className="block text-[9px] font-black uppercase tracking-wider text-orange-400">Garantía de Satisfacción</span>
-                  <span className="block text-xs font-bold text-zinc-300">¡Calidad de confianza en cada pieza! 🐾</span>
-                </div>
-              </div>
             </div>
 
             <div className="flex flex-col items-center gap-6 md:items-end justify-center">
@@ -990,6 +1039,34 @@ function App() {
             </div>
           </div>
         </footer>
+
+        {/* Floating Perrito WhatsApp FAB */}
+        <motion.a
+          href={whatsappHref}
+          target="_blank"
+          rel="noreferrer"
+          className="fixed bottom-6 right-6 z-50 flex items-center justify-center h-16 w-16 rounded-full border-2 border-orange-500 bg-zinc-950 shadow-[0_10px_30px_rgba(255,106,0,0.3)] cursor-pointer group"
+          initial={{ scale: 0, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
+          transition={{ delay: 1, type: "spring", stiffness: 260, damping: 20 }}
+          whileHover={{ scale: 1.1, rotate: 10 }}
+          whileTap={{ scale: 0.9 }}
+        >
+          {/* Glowing aura */}
+          <div className="absolute inset-0 rounded-full bg-orange-500/20 blur-md opacity-75 group-hover:opacity-100 group-hover:scale-110 transition-all duration-300" />
+          
+          {/* Perrito Logo */}
+          <img 
+            src="/images/logo-perrito.png" 
+            alt="Cotizar WhatsApp" 
+            className="relative h-13 w-13 rounded-full object-cover border border-white/10 z-10" 
+          />
+          
+          {/* Hover Label */}
+          <div className="absolute right-18 top-1/2 -translate-y-1/2 bg-zinc-950 text-white text-xs font-black uppercase tracking-wider py-2 px-3.5 rounded-xl border border-white/10 shadow-xl opacity-0 translate-x-4 pointer-events-none group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300 whitespace-nowrap z-20">
+            ¡Cotiza por WhatsApp! 🐾
+          </div>
+        </motion.a>
       </div>
     </>
   );
