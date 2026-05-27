@@ -324,7 +324,17 @@ function App() {
             <div className="flex items-center gap-5">
               <BrandMark />
               <div className="hidden sm:block">
-                <ThreePerritos />
+                <motion.div 
+                  className="relative flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-zinc-900 to-zinc-950 border border-white/10 shadow-[0_4px_15px_rgba(0,0,0,0.3)] overflow-hidden"
+                  whileHover={{ scale: 1.1, rotate: 5 }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  <img 
+                    src="/images/chatgpt-image.png" 
+                    alt="Logo Mr. Baleros ChatGPT" 
+                    className="h-full w-full object-cover" 
+                  />
+                </motion.div>
               </div>
             </div>
 
@@ -394,7 +404,19 @@ function App() {
                 {/* Mobile menu perritos */}
                 <div className="flex items-center justify-between mt-5 px-4 py-3 border-t border-white/5 bg-zinc-900/20 rounded-xl">
                   <span className="text-xs text-zinc-400 font-bold uppercase tracking-wider">Mascotas Oficiales 🐾</span>
-                  <ThreePerritos />
+                  <div className="flex items-center gap-3">
+                    <motion.div 
+                      className="relative flex h-8 w-8 items-center justify-center rounded-lg bg-zinc-900 border border-white/10 overflow-hidden shadow"
+                      whileHover={{ scale: 1.1 }}
+                    >
+                      <img 
+                        src="/images/chatgpt-image.png" 
+                        alt="Logo ChatGPT" 
+                        className="h-full w-full object-cover" 
+                      />
+                    </motion.div>
+                    <ThreePerritos />
+                  </div>
                 </div>
               </div>
             </motion.div>
@@ -455,11 +477,14 @@ function App() {
                   {stats.map((stat, i) => (
                     <motion.div 
                       key={stat.label} 
-                      className="stat-tile"
+                      className="stat-tile relative overflow-hidden group"
                       initial={{ opacity: 0, y: 20 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ delay: 0.2 + i * 0.1, duration: 0.6 }}
                     >
+                      <div className="absolute right-2 top-2 opacity-5 pointer-events-none group-hover:opacity-15 transition-opacity duration-300">
+                        <img src="/images/logo-perrito.png" alt="decoración perrito" className="h-6 w-6 rounded-full object-cover" />
+                      </div>
                       <strong>{stat.value}</strong>
                       <span>{stat.label}</span>
                     </motion.div>
@@ -509,6 +534,16 @@ function App() {
                         transition={{ duration: 3, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
                       >
                         MG, JAC & Europeos 🚗
+                      </motion.div>
+
+                      {/* Floating ChatGPT Badge */}
+                      <motion.div 
+                        className="absolute bottom-4 left-4 flex items-center gap-2 rounded-xl bg-zinc-950/80 border border-white/10 px-3 py-1.5 text-xs font-black uppercase tracking-wider text-white backdrop-blur-md shadow-lg"
+                        animate={{ y: [0, 5, 0] }}
+                        transition={{ duration: 3.5, repeat: Infinity, ease: "easeInOut", delay: 0.2 }}
+                      >
+                        <img src="/images/chatgpt-image.png" alt="ChatGPT mini" className="h-5 w-5 rounded-md object-cover" />
+                        <span>Edición 2026</span>
                       </motion.div>
                     </div>
 
@@ -578,12 +613,16 @@ function App() {
                   return (
                     <motion.article 
                       key={service.title} 
-                      className="service-card"
+                      className="service-card relative overflow-hidden group"
                       initial={{ opacity: 0, y: 20 }}
                       whileInView={{ opacity: 1, y: 0 }}
                       viewport={{ once: true, margin: "-50px" }}
                       transition={{ delay: index * 0.05, duration: 0.5 }}
                     >
+                      {/* Decorative small perrito watermark in card */}
+                      <div className="absolute right-4 bottom-4 opacity-5 pointer-events-none group-hover:opacity-15 transition-opacity duration-300">
+                        <img src="/images/logo-perrito.png" alt="decoración perrito" className="h-8 w-8 rounded-full object-cover" />
+                      </div>
                       <div className={`flex h-12 w-12 items-center justify-center rounded-xl ${service.accent}`}>
                         <Icon className="h-5 w-5" aria-hidden="true" />
                       </div>
@@ -804,14 +843,17 @@ function App() {
                 ].map((step, index) => (
                   <motion.div 
                     key={step} 
-                    className="process-row"
+                    className="process-row relative overflow-hidden group"
                     initial={{ opacity: 0, x: 30 }}
                     whileInView={{ opacity: 1, x: 0 }}
                     viewport={{ once: true }}
                     transition={{ delay: index * 0.1, duration: 0.5 }}
                   >
                     <span>{String(index + 1).padStart(2, '0')}</span>
-                    <p>{step}</p>
+                    <p className="flex-1">{step}</p>
+                    <div className="opacity-5 group-hover:opacity-15 transition-opacity duration-300 pointer-events-none">
+                      <img src="/images/logo-perrito.png" alt="decoración perrito" className="h-6 w-6 rounded-full object-cover" />
+                    </div>
                   </motion.div>
                 ))}
               </div>
