@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import {
   ArrowRight,
   Boxes,
+  Camera,
   ChevronRight,
   Cog,
   Facebook,
@@ -13,6 +14,7 @@ import {
   MessageCircle,
   PackageCheck,
   Phone,
+  Play,
   ShieldCheck,
   Sparkles,
   Star,
@@ -265,6 +267,98 @@ function ThreePerritos() {
         </motion.div>
       ))}
     </div>
+  );
+}
+
+const MEDIA_STORAGE_KEY = 'mrBaleros_mediaGallery';
+
+function getPublicMedia() {
+  try {
+    const raw = localStorage.getItem(MEDIA_STORAGE_KEY);
+    return raw ? JSON.parse(raw) : [];
+  } catch {
+    return [];
+  }
+}
+
+function MediaGallerySection() {
+  const [mediaItems, setMediaItems] = useState([]);
+
+  useEffect(() => {
+    setMediaItems(getPublicMedia());
+  }, []);
+
+  if (mediaItems.length === 0) return null;
+
+  return (
+    <section className="bg-zinc-900/30 py-20 sm:py-28 border-t border-white/5">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <motion.div
+          className="text-center max-w-2xl mx-auto mb-12"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+        >
+          <p className="section-kicker">Nuestro trabajo en acción</p>
+          <h2 className="section-title">Galería del Taller</h2>
+          <p className="mt-3 text-sm text-zinc-400">
+            Conoce más de nuestro taller, instalaciones y el trabajo que realizamos día a día.
+          </p>
+        </motion.div>
+
+        <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          {mediaItems.map((item, index) => (
+            <motion.div
+              key={item.id}
+              className="media-gallery-card group"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: '-40px' }}
+              transition={{ delay: index * 0.05, duration: 0.5 }}
+            >
+              {item.type === 'image' ? (
+                <div className="relative h-64 w-full overflow-hidden rounded-xl">
+                  <img
+                    src={item.url}
+                    alt={item.title || 'Imagen del taller'}
+                    className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                    loading="lazy"
+                    onError={(e) => { e.target.src = '/images/logo-perrito.png'; }}
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-zinc-950/80 via-transparent to-transparent" />
+                  <div className="absolute bottom-0 left-0 right-0 p-4">
+                    <div className="flex items-center gap-2">
+                      <Camera className="h-3.5 w-3.5 text-orange-400" />
+                      <p className="text-xs font-bold text-white truncate">{item.title || 'Imagen del taller'}</p>
+                    </div>
+                  </div>
+                </div>
+              ) : (
+                <div className="relative w-full overflow-hidden rounded-xl">
+                  <div className="aspect-video">
+                    <iframe
+                      src={`https://www.youtube.com/embed/${item.youtubeId}`}
+                      title={item.title || 'Video'}
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                      allowFullScreen
+                      className="w-full h-full rounded-xl"
+                      loading="lazy"
+                    />
+                  </div>
+                  {item.title && (
+                    <div className="mt-3 flex items-center gap-2">
+                      <Play className="h-3.5 w-3.5 text-red-400" />
+                      <p className="text-xs font-bold text-white truncate">{item.title}</p>
+                    </div>
+                  )}
+                </div>
+              )}
+            </motion.div>
+          ))}
+        </div>
+      </div>
+    </section>
   );
 }
 
@@ -806,6 +900,110 @@ function App() {
             </div>
           </section>
 
+          {/* IMPORTED AMERICAN AXLES BANNER */}
+          <section className="relative overflow-hidden bg-zinc-950 py-20 sm:py-28 border-t border-b border-white/5">
+            {/* Glowing neon bg effect */}
+            <div className="absolute -left-1/4 top-1/4 h-[350px] w-[350px] rounded-full bg-orange-600/10 blur-[120px] pointer-events-none" />
+            <div className="absolute -right-1/4 bottom-1/4 h-[350px] w-[350px] rounded-full bg-amber-500/10 blur-[120px] pointer-events-none" />
+
+            <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative z-10">
+              <div className="grid gap-12 lg:grid-cols-2 lg:items-center">
+                
+                {/* Left side: Huge impact sign */}
+                <motion.div
+                  initial={{ opacity: 0, x: -30 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.6 }}
+                >
+                  <div className="inline-flex items-center gap-2 rounded-full border border-orange-500/30 bg-orange-500/10 px-4 py-1.5 text-xs font-black uppercase tracking-wider text-orange-400">
+                    <span>🇺🇸</span> Importación Directa
+                  </div>
+                  
+                  <h2 className="mt-6 text-4xl font-black tracking-tight text-white sm:text-6xl uppercase leading-none">
+                    Flechas <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-500 to-amber-400">Americanas</span> <br />
+                    Importadas
+                  </h2>
+                  
+                  <p className="mt-6 text-base leading-8 text-zinc-300 sm:text-lg">
+                    Contamos con flechas homocinéticas completas e importadas directamente de Estados Unidos. Diseñadas para resistir las condiciones más extremas en vehículos 4x4, pick-ups, europeos y americanos de alto desempeño.
+                  </p>
+
+                  <div className="mt-8 grid gap-4 sm:grid-cols-2">
+                    <div className="rounded-xl border border-white/5 bg-white/2 p-4">
+                      <span className="block text-xs font-black uppercase tracking-wider text-orange-400">Calidad Heavy Duty</span>
+                      <p className="text-xs text-zinc-400 mt-1">Garantizan torsión extrema y durabilidad superior en carretera y off-road.</p>
+                    </div>
+                    <div className="rounded-xl border border-white/5 bg-white/2 p-4">
+                      <span className="block text-xs font-black uppercase tracking-wider text-orange-400">Medidas OEM Exactas</span>
+                      <p className="text-xs text-zinc-400 mt-1">Cero modificaciones, encaje directo según especificaciones de fábrica.</p>
+                    </div>
+                  </div>
+
+                  <div className="mt-8 flex flex-wrap gap-4">
+                    <motion.a 
+                      className="btn-primary" 
+                      href={whatsappHref}
+                      target="_blank"
+                      rel="noreferrer"
+                      whileHover={{ scale: 1.03 }}
+                      whileTap={{ scale: 0.97 }}
+                    >
+                      Cotizar Flecha Americana
+                      <ArrowRight className="h-4 w-4" />
+                    </motion.a>
+                  </div>
+                </motion.div>
+
+                {/* Right side: 2 new images grid showcase */}
+                <div className="grid gap-4 sm:grid-cols-2">
+                  <motion.div
+                    className="relative overflow-hidden rounded-2xl border border-white/10 bg-zinc-900/50 p-2 shadow-2xl backdrop-blur-md"
+                    initial={{ opacity: 0, scale: 0.95 }}
+                    whileInView={{ opacity: 1, scale: 1 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.6, delay: 0.1 }}
+                    whileHover={{ y: -5 }}
+                  >
+                    <div className="relative aspect-[3/4] overflow-hidden rounded-xl bg-zinc-950">
+                      <img 
+                        src="/images/flecha-americana-1.jpg" 
+                        alt="Flecha americana importada en Mr. Baleros" 
+                        className="h-full w-full object-cover transition-transform duration-500 hover:scale-105" 
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-zinc-950/80 via-transparent to-transparent" />
+                      <span className="absolute bottom-4 left-4 text-xs font-black uppercase tracking-wider text-white bg-zinc-950/80 px-3 py-1 rounded-lg border border-white/5">
+                        Flecha Americana
+                      </span>
+                    </div>
+                  </motion.div>
+
+                  <motion.div
+                    className="relative overflow-hidden rounded-2xl border border-white/10 bg-zinc-900/50 p-2 shadow-2xl backdrop-blur-md"
+                    initial={{ opacity: 0, scale: 0.95 }}
+                    whileInView={{ opacity: 1, scale: 1 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.6, delay: 0.2 }}
+                    whileHover={{ y: -5 }}
+                  >
+                    <div className="relative aspect-[3/4] overflow-hidden rounded-xl bg-zinc-950">
+                      <img 
+                        src="/images/flecha-americana-2.jpg" 
+                        alt="Detalle de estriado y junta homocinética" 
+                        className="h-full w-full object-cover transition-transform duration-500 hover:scale-105" 
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-zinc-950/80 via-transparent to-transparent" />
+                      <span className="absolute bottom-4 left-4 text-xs font-black uppercase tracking-wider text-white bg-zinc-950/80 px-3 py-1 rounded-lg border border-white/5">
+                        Junta Homocinética
+                      </span>
+                    </div>
+                  </motion.div>
+                </div>
+
+              </div>
+            </div>
+          </section>
+
           {/* INVENTORY SECTION */}
           <section id="inventario" className="bg-zinc-950 py-20 sm:py-28">
             <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -856,6 +1054,9 @@ function App() {
               </div>
             </div>
           </section>
+
+          {/* DYNAMIC MEDIA GALLERY (from admin panel) */}
+          <MediaGallerySection />
 
           <PerritoDivider />
 
